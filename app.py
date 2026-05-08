@@ -16,7 +16,7 @@ st.set_page_config(
 )
 
 st.title("📝 AI-Powered Multi-Input Summarizer")
-st.markdown("Generate a structured, meaningful summary from multiple inputs.")
+st.markdown("Generate a structured, meaningful summary from multiple inputs more accurately.")
 
 # Sidebar
 with st.sidebar:
