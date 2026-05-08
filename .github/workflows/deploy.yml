@@ -1,0 +1,35 @@
+name: Streamlit CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Basic Check
+      run: |
+        python -m py_compile app.py
+
+    - name: Streamlit App Smoke Test
+      run: |
+        timeout 20s streamlit run app.py || code=$?
+        if [[ $code -ne 0 && $code -ne 124 ]]; then
+          exit $code
+        fi
